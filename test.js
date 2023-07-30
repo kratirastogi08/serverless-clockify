@@ -3,7 +3,7 @@ module.exports.test = async (event) => {
       statusCode: 200,
       body: JSON.stringify(
         {
-          message: 'Test',
+          message: 'Test dev-4',
           input: event,
         },
         null,
