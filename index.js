@@ -3,7 +3,7 @@ module.exports.healthCheck = async (event) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: 'Howdi modi',
+        message: 'Howdi modi You are so beautiful',
         input: event,
       },
       null,
