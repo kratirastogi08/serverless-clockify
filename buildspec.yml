@@ -6,9 +6,12 @@ phases:
     commands:
      - npm install -g serverless
      - npm install
+  pre_build:
+    commands:
+      - echo "Entered pre-build phase"
   build:
     commands:
-     - serverless deploy --stage ${STAGE_NAME} 
+     - ./deploy_lambdas.sh ${STAGE_NAME} 
 
 cache:
   paths:
