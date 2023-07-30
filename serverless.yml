@@ -1,0 +1,34 @@
+org: kratirastogi
+app: aws-node-project
+service: aws-node-project
+frameworkVersion: '3'
+
+custom:
+  secrets: ${file(secrets.json)}
+  
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  timeout: 30
+  region: us-east-1
+  stage: ${self:custom.secrets.NODE_ENV}
+  environment:
+    NODE_ENV: ${self:custom.secrets.NODE_ENV}
+    DB_NAME: ${self:custom.secrets.DB_NAME}
+    DB_USER: ${self:custom.secrets.DB_USER}
+    DB_PASSWORD: ${self:custom.secrets.DB_PASSWORD}
+    DB_HOST: ${self:custom.secrets.DB_HOST}
+    DB_PORT: ${self:custom.secrets.DB_PORT}
+
+functions:
+  healthCheck:
+    handler: index.healthCheck
+    events:
+      - http: 
+          path: /
+          method: get
+          cors: true
+
+plugins:
+- serverless-offline
