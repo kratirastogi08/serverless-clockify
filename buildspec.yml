@@ -8,7 +8,7 @@ phases:
      - npm install
   build:
     commands:
-     - ./deploy_lambdas.sh ${STAGE_NAME} 
+     - serverless deploy --stage ${STAGE_NAME} 
 
 cache:
   paths:
