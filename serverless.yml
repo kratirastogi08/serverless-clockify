@@ -29,6 +29,13 @@ functions:
           path: /
           method: get
           cors: true
+  healthCheck:
+    handler: index.healthCheck
+    events:
+      - http: 
+          path: /
+          method: get
+          cors: true
 
 plugins:
 - serverless-offline

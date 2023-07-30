@@ -1,9 +1,9 @@
-module.exports.handler = async (event) => {
+module.exports.healthCheck = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: 'Go Serverless v3.0! Your function executed absolute successfully in dev-1 again dev-2',
+        message: 'Health Check',
         input: event,
       },
       null,
