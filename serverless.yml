@@ -4,7 +4,7 @@ service: aws-node-project
 frameworkVersion: '3'
 
 custom:
-  secrets: ${file(secrets.json)}
+  secrets: ${file(env.${opt:stage, self:provider.stage}.json)}
   
 
 provider:

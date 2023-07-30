@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+     - npm install -g serverless
+     - npm install
+  build:
+    commands:
+     - ./deploy_lambdas.sh ${STAGE_NAME} 
+
+cache:
+  paths:
+    - node_modules
