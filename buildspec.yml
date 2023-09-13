@@ -2,17 +2,16 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18
-    commands:
-     - npm install -g serverless
-     - npm install
+      nodejs: 18     
   pre_build:
     commands:
       - echo "Entered pre-build phase"
+      - npm install
   build:
     commands:
-     - ./deploy_lambdas.sh ${STAGE_NAME} 
-
+     - echo Build started on `date`
+     - echo Compiling the dist folder
+     - npm run-script build
 cache:
   paths:
     - node_modules

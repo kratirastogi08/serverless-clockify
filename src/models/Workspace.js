@@ -1,0 +1,21 @@
+module.exports.workspace=(sequelize,type)=>{
+    return sequelize.define('Workspace',{
+        workspace_id:{
+            type:type.INTEGER,
+            primaryKey:true,
+            autoIncrement:true
+        },
+        workspace_name:{
+            type:type.STRING,
+            allowNull:false
+        },
+        email_id:{
+            type:type.STRING,
+            allowNull:false,
+            unique:true
+        }
+    },{
+        timestamps:true,
+        freezeTableName:true
+    })
+}

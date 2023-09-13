@@ -3,9 +3,16 @@ app: aws-node-project
 service: aws-node-project
 frameworkVersion: '3'
 
-custom:
-  secrets: ${file(env.${opt:stage, self:provider.stage}.json)}
+# custom:
+#   secrets: ${file(env.${opt:stage, self:provider.stage}.json)}
   
+custom:
+   secrets: ${file(env.dev.json)}
+   webpack:
+    webpackConfig: ./webpack.config.js 
+    includeModules: true
+    packager: npm
+   
 
 provider:
   name: aws
@@ -20,6 +27,29 @@ provider:
     DB_PASSWORD: ${self:custom.secrets.DB_PASSWORD}
     DB_HOST: ${self:custom.secrets.DB_HOST}
     DB_PORT: ${self:custom.secrets.DB_PORT}
+    JWT_SECRET: ${self:custom.secrets.JWT_SECRET}
+    AWS_ACCESS_KEY1: ${self:custom.secrets.AWS_ACCESS_KEY1}
+    AWS_SECRET_KEY1: ${self:custom.secrets.AWS_SECRET_KEY1}
+    SES_REGION: ${self:custom.secrets.SES_REGION}
+    GOOGLE_CLIENT_ID: ${self:custom.secrets.GOOGLE_CLIENT_ID}
+    GOOGLE_CLIENT_SECRET: ${self:custom.secrets.GOOGLE_CLIENT_SECRET}
+    AWS_BUCKET_NAME: ${self:custom.secrets.AWS_BUCKET_NAME}
+    AWS_BUCKET_REGION: ${self:custom.secrets.AWS_BUCKET_REGION}
+  
+     
+plugins:
+- serverless-webpack
+- serverless-offline
+
+
+package:
+  individually: true
+
+Globals:
+  Api:
+   BinaryMediaTypes:
+      - "multipart/form-data"
+      - "application/json"
 
 functions:
   healthCheck:
@@ -29,13 +59,134 @@ functions:
           path: /
           method: get
           cors: true
-  healthCheck:
-    handler: index.healthCheck
+  verify-token:
+    handler: src/middleware/verifyAuth.auth
+  register:
+    handler: src/handlers/user.register
     events:
       - http: 
-          path: /
+          path: /register
+          method: post
+          cors: true
+  login:
+    handler: src/handlers/user.login
+    events:
+      - http: 
+          path: /login
+          method: post
+          cors: true
+  addMembersToTeam:
+    handler: src/handlers/user.addMembersToTeam
+    events:
+      - http: 
+          path: /addMembersToTeam
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  inviteEmail:
+    handler: src/handlers/user.inviteEmail
+    events:
+      - http: 
+          path: /inviteEmail
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  acceptInvite:
+    handler: src/handlers/user.acceptInvite
+    events:
+      - http: 
+          path: /acceptInvite/workspace
           method: get
           cors: true
+  ses:
+    handler: src/handlers/user.ses
+    events:
+      - http: 
+          path: /ses
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  exportFile:
+    handler: src/handlers/user.exportFile
+    events:
+      - http: 
+          path: /exportFile
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  generatePdf:
+    handler: src/handlers/user.generatePdf
+    events:
+      - http: 
+          path: /generatePdf
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  addRole:
+    handler: src/handlers/role.addRole
+    events:
+      - http: 
+          path: /addRole
+          method: post
+          cors: true
+  updateProfileImage:
+    handler: src/handlers/user.updateProfileImage
+    events:
+      - http: 
+          path: /uploadImage
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  importFile:
+    handler: src/handlers/user.importFile
+    events:
+      - http: 
+          path: /importFile
+          method: post
+          cors: true
+  thirdPartyApi:
+    handler: src/handlers/user.thirdPartyApi
+    events:
+      - http: 
+          path: /thirdPartyApi
+          method: get
+          cors: true
+  me:
+    handler: src/handlers/user.me
+    events:
+      - http: 
+          path: /me
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
 
-plugins:
-- serverless-offline
+
+
