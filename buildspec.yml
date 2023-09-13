@@ -3,9 +3,8 @@ phases:
   install:
     runtime-versions:
       nodejs: 18     
-  pre_build:
     commands:
-      - echo "Entered pre-build phase"
+      - npm  install -g serverless
       - npm install
   build:
     commands:
