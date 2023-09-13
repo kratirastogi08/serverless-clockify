@@ -4,7 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path=require('path')
 module.exports={
     target: 'node',
-    mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+    mode: slsw.lib.webpack.isLocal ? 'development' : 'development',
     entry: slsw.lib.entries,
     externals: [nodeExternals()],
     resolve: {
