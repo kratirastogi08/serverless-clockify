@@ -1,0 +1,8 @@
+{
+  "name": "aws-node-project",
+  "version": "1.0.0",
+  "description": "Packaged externals for aws-node-project",
+  "private": true,
+  "scripts": {},
+  "dependencies": {}
+}

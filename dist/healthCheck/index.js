@@ -1,0 +1,1 @@
+(()=>{var e={10:e=>{e.exports.healthCheck=async e=>({statusCode:200,body:JSON.stringify({message:"Howdi modi You are so beautiful Yor are so ugly dev dev-6",input:e},null,2)})}},o={},r=function r(t){var s=o[t];if(void 0!==s)return s.exports;var u=o[t]={exports:{}};return e[t](u,u.exports,r),u.exports}(10);module.exports=r})();

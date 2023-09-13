@@ -1,0 +1,14 @@
+{
+  "name": "aws-node-project",
+  "version": "1.0.0",
+  "description": "Packaged externals for aws-node-project",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@middy/core": "^4.6.0",
+    "@middy/http-error-handler": "^4.6.0",
+    "@middy/http-json-body-parser": "^4.6.0",
+    "pg": "^8.11.3",
+    "sequelize": "^6.32.1"
+  }
+}

@@ -11,7 +11,7 @@ phases:
       - serverless deploy --stage dev
 artifacts:
   files:
-    - dist/**/*
+    - '**/*'
 cache:
   paths:
     - node_modules

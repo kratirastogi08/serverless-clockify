@@ -43,6 +43,7 @@ plugins:
 - serverless-webpack
 - serverless-offline
 - serverless-deployment-bucket
+- serverless-plugin-include-dependencies
 
 
 
@@ -50,8 +51,6 @@ package:
   individually: true
   exclude:
     - node_modules/**
-
-
 
 functions:
   healthCheck:
