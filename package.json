@@ -29,6 +29,7 @@
     "pg-hstore": "^2.3.4",
     "puppeteer": "^21.1.1",
     "sequelize": "^6.32.1",
+    "serverless-deployment-bucket": "^1.6.0",
     "serverless-s3-sync": "^3.1.0",
     "serverless-webpack": "^5.13.0",
     "stream": "^0.0.2",

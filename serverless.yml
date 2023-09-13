@@ -19,6 +19,9 @@ provider:
   timeout: 30
   region: us-east-1
   stage: ${self:custom.secrets.NODE_ENV}
+  deploymentBucket:
+    name: your-custom-deployment-bucket
+    serverSideEncryption: AES256
   environment:
     NODE_ENV: ${self:custom.secrets.NODE_ENV}
     DB_NAME: ${self:custom.secrets.DB_NAME}
@@ -39,6 +42,8 @@ provider:
 plugins:
 - serverless-webpack
 - serverless-offline
+- serverless-deployment-bucket
+
 
 
 package:
