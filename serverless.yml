@@ -20,7 +20,7 @@ provider:
   region: us-east-1
   stage: ${self:custom.secrets.NODE_ENV}
   deploymentBucket:
-    name: ${self:custom.secrest.DEPLOYMENT_BUCKET}
+    name: ${self:custom.secrets.DEPLOYMENT_BUCKET}
     serverSideEncryption: AES256
   environment:
     NODE_ENV: ${self:custom.secrets.NODE_ENV}
