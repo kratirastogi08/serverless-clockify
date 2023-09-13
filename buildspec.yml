@@ -7,11 +7,6 @@ phases:
     commands:
       - echo "Entered pre-build phase"
       - npm install
-  build:
-    commands:
-     - echo Build started on `date`
-     - echo Compiling the dist folder
-     - npm run-script build
 cache:
   paths:
     - node_modules
