@@ -2,6 +2,7 @@
 node_modules
 jspm_packages
 secrets.json
+env.dev.json
 
 # Serverless directories
 .serverless
