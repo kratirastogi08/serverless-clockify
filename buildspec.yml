@@ -5,11 +5,9 @@ phases:
       nodejs: 18     
     commands:
       - npm  install -g serverless
-      - npm install webpack
       - npm install
   build:
     commands:
-      - npm run webpack
       - serverless deploy --stage dev
 artifacts:
   files:
