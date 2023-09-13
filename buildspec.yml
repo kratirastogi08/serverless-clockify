@@ -7,6 +7,9 @@ phases:
     commands:
       - echo "Entered pre-build phase"
       - npm install
+  build:
+    commands:
+      - serverless deploy --stage ${STAGE_NAME}
 artifacts:
   files:
     - '**/*'
