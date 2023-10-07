@@ -76,12 +76,31 @@ functions:
           path: /login
           method: post
           cors: true
+  forgotPassword:
+    handler: src/handlers/user.forgotPassword
+    events:
+      - http: 
+          path: /forgotPassword
+          method: put
+          cors: true
   addMembersToTeam:
     handler: src/handlers/user.addMembersToTeam
     events:
       - http: 
           path: /addMembersToTeam
           method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  worspaceUsers:
+    handler: src/handlers/user.worspaceUsers
+    events:
+      - http: 
+          path: /worspaceUsers
+          method: get
           cors: true
           authorizer: 
             name: verify-token 
@@ -181,6 +200,234 @@ functions:
     events:
       - http: 
           path: /me
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  createProject:
+    handler: src/handlers/project.createProject
+    events:
+      - http: 
+          path: /project/create
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  createClient:
+    handler: src/handlers/client.createClient
+    events:
+      - http: 
+          path: /client/create
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  clientList:
+    handler: src/handlers/client.clientList
+    events:
+      - http: 
+          path: /client/list
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  updateClient:
+    handler: src/handlers/client.updateClient
+    events:
+      - http: 
+          path: /client/update/{client_id}
+          method: put
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  addMembersToProject:
+    handler: src/handlers/project.addMembersToProject
+    events:
+      - http: 
+          path: /project/addMembers/{project_id}
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  addMembersList:
+    handler: src/handlers/project.addMembersList
+    events:
+      - http: 
+          path: /project/addMembers/{project_id}
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  projectMembers:
+    handler: src/handlers/project.projectMembers
+    events:
+      - http: 
+          path: /project/projectMembers/{project_id}
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  projectList:
+    handler: src/handlers/project.projectList
+    events:
+      - http: 
+          path: /project/projectList
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  projectStatus:
+    handler: src/handlers/project.projectStatus
+    events:
+      - http: 
+          path: /project/projectStatus/{project_id}
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  taskList:
+    handler: src/handlers/task.taskList
+    events:
+      - http: 
+          path: /task/{project_id}/taskList
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  createTask:
+    handler: src/handlers/task.createTask
+    events:
+      - http: 
+          path: /task/{project_id}/createTask
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  assignTaskToUsers:
+    handler: src/handlers/task.assignTaskToUsers
+    events:
+      - http: 
+          path: /task/{task_id}/assignTaskToUsers
+          method: put
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  updateTaskStatus:
+    handler: src/handlers/task.updateTaskStatus
+    events:
+      - http: 
+          path: /task/{task_id}/updateTaskStatus
+          method: put
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  createTag:
+    handler: src/handlers/tag.createTag
+    events:
+      - http: 
+          path: /tag/create
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  tagList:
+    handler: src/handlers/tag.tagList
+    events:
+      - http: 
+          path: /tag/list
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  updateTag:
+    handler: src/handlers/tag.updateTag
+    events:
+      - http: 
+          path: /tag/update/{tag_id}
+          method: put
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  createTimesheet:
+    handler: src/handlers/timesheet.createTimesheet
+    events:
+      - http: 
+          path: /timesheet/create
+          method: post
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  clientwiseProjectList:
+    handler: src/handlers/client.clientwiseProjectList
+    events:
+      - http: 
+          path: /timesheet/clientwiseProjectList
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  timesheetList:
+    handler: src/handlers/timesheet.timesheetList
+    events:
+      - http: 
+          path: /timesheet/list
           method: get
           cors: true
           authorizer: 

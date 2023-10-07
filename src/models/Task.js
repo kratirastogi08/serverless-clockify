@@ -1,0 +1,23 @@
+module.exports.task=(sequelize,type)=>{
+    return sequelize.define('Task',{
+        task_id:{
+            type:type.INTEGER,
+            primaryKey:true,
+            autoIncrement:true
+        },
+        task_name:{
+            type:type.STRING,
+            allowNull:false
+        },
+        is_active:{
+            type:type.BOOLEAN,
+            defaultValue:true
+        },
+        assignee_ids:{
+            type:type.JSONB
+        }
+    },{
+        timestamps:true,
+        freezeTableName:true
+    })
+}

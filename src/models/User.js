@@ -13,6 +13,12 @@ module.exports.user=(sequelize,type)=>{
         last_name:{
             type:type.STRING,
         },
+        full_name:{
+            type:  new type.VIRTUAL(type.STRING, ['first_name','last_name']),
+            get() {
+              return `${this.first_name} ${this.last_name}`;
+            },
+        },
         email_id:{
             type:type.STRING,
             allowNull:false,
@@ -35,6 +41,11 @@ module.exports.user=(sequelize,type)=>{
 
     },{
         timestamps:true,
-        freezeTableName:true
+        freezeTableName:true,
+        defaultScope: {
+            attributes: {
+              exclude: ['createdAt','updatedAt']
+            }
+          }
     })
 }

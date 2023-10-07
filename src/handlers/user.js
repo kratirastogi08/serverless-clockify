@@ -35,7 +35,8 @@ module.exports.register = middy(async (event, context) => {
 
     await validate(registerSchema, event.body)
     const { email_id, password, first_name, last_name } = event.body
-    const hashPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
     const isUserExists = await User.findOne({
       where: {
         email_id
@@ -108,7 +109,7 @@ module.exports.login = middy(async (event, context, callback) => {
     if (!user) {
       throw new ErrorResponse(MESSAGES.INVALID_CREDENTIALS, HTTP_STATUS_CODE.UNAUTHORIZED)
     }
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user?.password||"")
     if (!isMatch) {
       throw new ErrorResponse(MESSAGES.INVALID_CREDENTIALS, HTTP_STATUS_CODE.UNAUTHORIZED)
     }
@@ -140,6 +141,47 @@ module.exports.login = middy(async (event, context, callback) => {
   }
 }).use(jsonBodyParser())
   .use(httpErrorHandler())
+module.exports.forgotPassword=middy(async (event, context, callback)=>{
+  context.callbackWaitsForEmptyEventLoop = false;
+  try{
+    const {User}=await connectToDatabase()
+    const {email_id,password}=event.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+    const user=await User.findOne({
+      where:{
+        email_id
+      }
+    })
+    if(!user)
+    {
+      throw new ErrorResponse(MESSAGES.USER_NOT_FOUND, HTTP_STATUS_CODE.UNAUTHORIZED)
+    }
+
+    await User.update({password:hashPassword},{where:{
+      email_id
+    }})
+
+    return {
+      statusCode:200,
+      body: JSON.stringify({
+        message:"Success"
+      })
+    }
+
+  }
+  catch(error)
+  {
+    let err = error;
+    // if error not thrown by us
+    if (!(err instanceof ErrorResponse)) {
+      console.error(err);
+      err = new ErrorResponse();
+    }
+    return err;
+  }
+}).use(jsonBodyParser())
+.use(httpErrorHandler())
 module.exports.me = middy(async (event, context) => {
   try {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -343,6 +385,58 @@ module.exports.acceptInvite = middy(async (event, context) => {
 }).use(jsonBodyParser())
   .use(httpErrorHandler())
 
+module.exports.worspaceUsers=middy(async (event,context)=>{
+  context.callbackWaitsForEmptyEventLoop = false;
+  try{
+    const {Workspace,User}= await connectToDatabase()
+    const { workspaceId } = event.requestContext.authorizer.principalId
+   const workspaceUsers= await Workspace.findOne({
+      where:{
+        workspace_id:workspaceId
+      },
+      attributes:{
+        exclude:['createdAt','updatedAt']
+      },
+      include:{
+        model:User,
+        as:"users",
+        where:{
+          first_name:{
+            [Op.ne]:null
+          }
+        },
+        attributes:{
+          exclude:['createdAt','updatedAt']
+        },
+        through:{
+          attributes:[]
+        }
+      },
+      order:[[{
+        model: User,
+        as : "users",       
+      },'first_name',
+      'ASC']]
+    })
+    return{
+      statusCode:200,
+      body:JSON.stringify({
+        data:workspaceUsers
+      })
+    }
+  }
+  catch(error)
+  {
+    let err = error;
+    // if error not thrown by us
+    if (!(err instanceof ErrorResponse)) {
+      console.error(err);
+      err = new ErrorResponse();
+    }
+    return err;
+  }
+}).use(jsonBodyParser())
+.use(httpErrorHandler())
 module.exports.ses = middy(async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
   const { User, UserWorkspace } = await connectToDatabase()

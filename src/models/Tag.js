@@ -1,0 +1,20 @@
+module.exports.tag=(sequelize,type)=>{
+    return sequelize.define('Tag',{
+        tag_id:{
+            type:type.INTEGER,
+            primaryKey:true,
+            autoIncrement:true
+        },
+        tag_name:{
+            type:type.STRING,
+            allowNull:false
+        },
+        is_active:{
+            type:type.BOOLEAN,
+            defaultValue:true
+        }
+    },{
+        timestamps:true,
+        freezeTableName:true
+    })
+}
