@@ -1,3 +1,4 @@
+const moment = require('moment');
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
@@ -9,13 +10,22 @@ function padTo2Digits(num) {
   
     seconds = seconds % 60;
     minutes = minutes % 60;
-    hours = hours % 24;
   
     return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(
       seconds,
     )}`;
   }
-
+const getDaysBwDtaes=(startDate,endDate)=>{
+  const dateArray = new Array();
+    let currentDate = moment(startDate);
+    let stopDate=moment(endDate)
+    while (currentDate <= stopDate) {
+        dateArray.push(moment(currentDate).format('YYYY-MM-DD'));
+        currentDate = currentDate.add(1, 'days');
+    }
+    return dateArray;
+}
 module.exports={
-    convertMsToTime
+    convertMsToTime,
+    getDaysBwDtaes
 }

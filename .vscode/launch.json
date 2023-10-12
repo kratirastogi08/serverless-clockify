@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\src\\middleware\\verifyAuth.js"
+            "program": "${workspaceFolder}\\src\\handlers\\reports.js"
         }
     ]
 }

@@ -435,6 +435,30 @@ functions:
             resultTtlInSeconds: 0
             identitySource: 'method.request.header.Authorization'
             type: request
+  dashboard:
+    handler: src/handlers/dashboard.dashboard
+    events:
+      - http: 
+          path: /dashboard
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
+  summary:
+    handler: src/handlers/reports.summary
+    events:
+      - http: 
+          path: /reports/summary
+          method: get
+          cors: true
+          authorizer: 
+            name: verify-token 
+            resultTtlInSeconds: 0
+            identitySource: 'method.request.header.Authorization'
+            type: request
 
 
 
